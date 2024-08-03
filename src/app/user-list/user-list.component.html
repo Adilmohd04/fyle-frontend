@@ -1,0 +1,70 @@
+<div class="max-w-xl mx-auto bg-gray-100 p-4 rounded-lg shadow-md">
+  <div class="flex flex-col md:flex-row mb-4 space-y-4 md:space-y-0 md:space-x-2">
+    <input type="text" 
+           [(ngModel)]="searchName" 
+           (input)="onSearch()" 
+           placeholder="Search by name"
+           class="w-full md:w-1/2 p-2 border border-gray-400 rounded focus:outline-none focus:border-blue-600">
+    <select [(ngModel)]="filterType" 
+            (change)="onFilterChange()"
+            class="w-full md:w-1/2 p-2 border border-gray-400 rounded focus:outline-none focus:border-blue-600">
+      <option value="">All Workout Types</option>
+      <option value="Running">Running</option>
+      <option value="Cycling">Cycling</option>
+      <option value="Swimming">Swimming</option>
+      <option value="Yoga">Yoga</option>
+    </select>
+  </div>
+
+  <table class="w-full mb-4 text-sm md:text-base bg-white rounded-lg shadow-md">
+    <thead class="bg-blue-200">
+      <tr>
+        <th class="text-left py-2 px-4 text-blue-700">Name</th>
+        <th class="text-left py-2 px-4 text-blue-700">Workouts</th>
+        <th class="text-left py-2 px-4 text-blue-700">Number of Workouts</th>
+        <th class="text-left py-2 px-4 text-blue-700">Total Workout Minutes</th>
+        <th class="text-left py-2 px-4 text-blue-700">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedUserData" 
+          (click)="onSelectUser(user)" 
+          class="cursor-pointer hover:bg-gray-200">
+        <td class="py-2 px-4">{{ user.name }}</td>
+        <td class="py-2 px-4">{{ getUserWorkouts(user) }}</td>
+        <td class="py-2 px-4">{{ getNumberOfWorkouts(user) }}</td>
+        <td class="py-2 px-4">{{ getTotalWorkoutMinutes(user) }}</td>
+        <td class="py-2 px-4">
+          <button (click)="onDeleteUser(user)" 
+                  class="text-red-700 hover:text-red-900">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="!paginatedUserData.length">
+        <td colspan="5" class="text-center py-4 text-gray-600">
+          No users available. Please add users to see them in the list.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex flex-col md:flex-row justify-between items-center mt-4 space-y-4 md:space-y-0 md:space-x-4">
+    <div class="flex space-x-2">
+      <button (click)="goToPage(currentPage - 1)" 
+              [disabled]="currentPage === 1"
+              class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-800 disabled:opacity-50">Previous</button>
+      <button (click)="goToPage(currentPage + 1)" 
+              [disabled]="currentPage === totalPages"
+              class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-800 disabled:opacity-50">Next</button>
+    </div>
+    <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span>
+    <div class="flex items-center space-x-2">
+      <label for="itemsPerPage" class="block text-gray-700 font-bold mb-2">Items per page</label>
+      <input type="number" 
+             [(ngModel)]="itemsPerPage" 
+             (change)="onItemsPerPageChange($event)" 
+             id="itemsPerPage"
+             class="w-20 p-2 border border-gray-400 rounded focus:outline-none focus:border-blue-600" 
+             min="1">
+    </div>
+  </div>
+</div>
