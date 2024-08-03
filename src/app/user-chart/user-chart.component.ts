@@ -28,18 +28,19 @@ export class UserChartComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     if (this.isBrowser) {
       this.createChart();
-      if (this.users.length > 0 && !this.selectedUser) {
-        this.selectedUser = this.users[0]; 
-            }
-      this.updateChart(); 
+      this.updateChart();
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.isBrowser) {
       if (changes['selectedUser'] || changes['users']) {
-        if (!this.selectedUser && this.users.length > 0) {
-          this.selectedUser = this.users[0]; 
+        if (this.users.length === 0) {
+          this.selectedUser = null; 
+          this.clearChart();
+        } else if (!this.selectedUser || !this.users.some(user => user.id === this.selectedUser?.id)) {
+      
+          this.selectedUser = this.getDefaultUser();
         }
         this.updateChart();
       }
@@ -49,10 +50,19 @@ export class UserChartComponent implements OnChanges, OnInit {
   onDeleteUser(): void {
     if (this.selectedUser) {
       const deletedUser = this.selectedUser;
-      this.deleteUser.emit(deletedUser); 
-      this.users = this.users.filter(user => user.id !== deletedUser.id); 
-      this.selectedUser = this.getDefaultUser();
-      this.updateChart(); 
+      this.deleteUser.emit(deletedUser);
+      
+      
+      this.users = this.users.filter(user => user.id !== deletedUser.id);
+
+      
+      if (this.users.length === 0) {
+        this.selectedUser = null;
+        this.clearChart();
+      } else {
+        this.selectedUser = this.getDefaultUser();
+        this.updateChart();
+      }
     }
   }
 
@@ -97,12 +107,18 @@ export class UserChartComponent implements OnChanges, OnInit {
 
         this.chart.data.labels = workoutTypes;
         this.chart.data.datasets[0].data = workoutMinutes;
-        this.chart.update();
       } else {
-        this.chart.data.labels = [];
-        this.chart.data.datasets[0].data = [];
-        this.chart.update();
+        this.clearChart();
       }
+      this.chart.update();
+    }
+  }
+
+  private clearChart(): void {
+    if (this.chart) {
+      this.chart.data.labels = [];
+      this.chart.data.datasets[0].data = [];
+      this.chart.update();
     }
   }
 

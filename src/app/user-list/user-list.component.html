@@ -39,7 +39,7 @@
                   class="text-red-700 hover:text-red-900">Delete</button>
         </td>
       </tr>
-      <tr *ngIf="!paginatedUserData.length">
+      <tr *ngIf="!paginatedUserData.length && totalPages === 0">
         <td colspan="5" class="text-center py-4 text-gray-600">
           No users available. Please add users to see them in the list.
         </td>
@@ -50,10 +50,10 @@
   <div class="flex flex-col md:flex-row justify-between items-center mt-4 space-y-4 md:space-y-0 md:space-x-4">
     <div class="flex space-x-2">
       <button (click)="goToPage(currentPage - 1)" 
-              [disabled]="currentPage === 1"
+              [disabled]="currentPage === 1 || totalPages === 0"
               class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-800 disabled:opacity-50">Previous</button>
       <button (click)="goToPage(currentPage + 1)" 
-              [disabled]="currentPage === totalPages"
+              [disabled]="currentPage === totalPages || totalPages === 0"
               class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-800 disabled:opacity-50">Next</button>
     </div>
     <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span>

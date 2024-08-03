@@ -40,7 +40,7 @@ export class UserListComponent {
 
   onDeleteUser(user: User): void {
     this.workoutService.deleteUser(user.id); 
-    this.paginate();
+    this.paginate(); 
   }
 
   onItemsPerPageChange(event: any) {
