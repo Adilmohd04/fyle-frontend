@@ -36,7 +36,7 @@ export class UserChartComponent implements OnChanges, OnInit {
     if (this.isBrowser) {
       if (changes['selectedUser'] || changes['users']) {
         if (this.users.length === 0) {
-          this.selectedUser = null; 
+          this.selectedUser = null; // Ensure selectedUser is null if no user
           this.clearChart();
         } else if (!this.selectedUser || !this.users.some(user => user.id === this.selectedUser?.id)) {
       
