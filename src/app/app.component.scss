@@ -4,18 +4,18 @@
 
 
 .header-container {
-    background-color: #1E3A8A; /* Dark blue background */
-    padding: 1rem 1.5rem; /* Padding for top/bottom and left/right */
-    border-radius: 0.5rem; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    background-color: #1E3A8A; 
+    padding: 1rem 1.5rem; 
+    border-radius: 0.5rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   }
   .header-title {
-    font-size: 2rem; /* Adjusted font size for better readability */
-    color: #FFFFFF; /* White text color */
-    font-weight: bold; /* Bold font weight */
+    font-size: 2rem; 
+    color: #FFFFFF;
+    font-weight: bold;
   }
-  /* styles.css or styles.scss */
+
 .app-background {
-  background-color: #f7fafc; /* Tailwind gray-50 */
+  background-color: #f7fafc; 
   min-height: 100vh;
 }
