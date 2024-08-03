@@ -28,11 +28,10 @@ export class UserChartComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     if (this.isBrowser) {
       this.createChart();
-      // Ensure initial selection
       if (this.users.length > 0 && !this.selectedUser) {
-        this.selectedUser = this.users[0]; // Default to the first user if none is selected
-      }
-      this.updateChart(); // Update chart after setting the initial selected user
+        this.selectedUser = this.users[0]; 
+            }
+      this.updateChart(); 
     }
   }
 
@@ -40,7 +39,7 @@ export class UserChartComponent implements OnChanges, OnInit {
     if (this.isBrowser) {
       if (changes['selectedUser'] || changes['users']) {
         if (!this.selectedUser && this.users.length > 0) {
-          this.selectedUser = this.users[0]; // Set to the first user if no selected user
+          this.selectedUser = this.users[0]; 
         }
         this.updateChart();
       }
@@ -50,11 +49,10 @@ export class UserChartComponent implements OnChanges, OnInit {
   onDeleteUser(): void {
     if (this.selectedUser) {
       const deletedUser = this.selectedUser;
-      this.deleteUser.emit(deletedUser); // Emit the delete event
-      this.users = this.users.filter(user => user.id !== deletedUser.id); // Remove user from the list
-      // Update selected user to a new available user or clear chart if none available
+      this.deleteUser.emit(deletedUser); 
+      this.users = this.users.filter(user => user.id !== deletedUser.id); 
       this.selectedUser = this.getDefaultUser();
-      this.updateChart(); // Update the chart with the new selected user or clear it
+      this.updateChart(); 
     }
   }
 
@@ -101,7 +99,6 @@ export class UserChartComponent implements OnChanges, OnInit {
         this.chart.data.datasets[0].data = workoutMinutes;
         this.chart.update();
       } else {
-        // Clear the chart if no user is selected
         this.chart.data.labels = [];
         this.chart.data.datasets[0].data = [];
         this.chart.update();
